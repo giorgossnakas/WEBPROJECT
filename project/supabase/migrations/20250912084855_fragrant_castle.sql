@@ -21,7 +21,7 @@
     - Add policy for service role to read all data
 */
 
-CREATE TABLE IF NOT EXISTS consultations (
+CREATE TABLE IF NOT EXISTS TABLE1 (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   name text NOT NULL,
   email text NOT NULL,
@@ -35,18 +35,18 @@ CREATE TABLE IF NOT EXISTS consultations (
   updated_at timestamptz DEFAULT now()
 );
 
-ALTER TABLE consultations ENABLE ROW LEVEL SECURITY;
+ALTER TABLE TABLE1 ENABLE ROW LEVEL SECURITY;
 
 -- Allow anyone to insert consultations (for public form submissions)
 CREATE POLICY "Anyone can insert consultations"
-  ON consultations
+  ON TABLE1
   FOR INSERT
   TO anon, authenticated
   WITH CHECK (true);
 
 -- Allow service role to read all consultations (for admin access)
 CREATE POLICY "Service role can read all consultations"
-  ON consultations
+  ON TABLE1
   FOR SELECT
   TO service_role
   USING (true);
